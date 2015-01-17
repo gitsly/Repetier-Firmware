@@ -21,7 +21,8 @@
 
 /* Some words on units:
 
-From 0.80 onwards the units used are unified for easier configuration, watch out when transfering from older configs!
+From 0.80 onwards the units used are unified for easier configuration, watch out
+when transfering from older configs!
 
 Speed is in mm/s
 Acceleration in mm/s^2
@@ -80,7 +81,7 @@ To override EEPROM settings with config settings, set EEPROM_MODE 0
 // Unique One rev. A          = 88
 // User layout defined in userpins.h = 999
 
-#define MOTHERBOARD 33
+#define MOTHERBOARD 80
 
 #include "pins.h"
 
@@ -104,7 +105,7 @@ is a full cartesian system where x, y and z moves are handled by separate motors
 Cases 1 and 2 cover all needed xy H gantry systems. If you get results mirrored etc. you can swap motor connections for x and y.
 If a motor turns in the wrong direction change INVERT_X_DIR or INVERT_Y_DIR.
 */
-#define DRIVE_SYSTEM 0
+#define DRIVE_SYSTEM 3
 
 // ##########################################################################################
 // ##                               Calibration                                            ##
@@ -534,7 +535,7 @@ Value is used for all generic tables created. */
 // ############# Heated bed configuration ########################
 
 /** \brief Set true if you have a heated bed conected to your board, false if not */
-#define HAVE_HEATED_BED true
+#define HAVE_HEATED_BED false
 
 #define HEATED_BED_MAX_TEMP 115
 /** Skip M190 wait, if heated bed is already within x degrees. Fixed numbers only, 0 = off. */
@@ -602,23 +603,23 @@ on this endstop.
 #define ENDSTOP_PULLUP_Z_MIN false
 #define ENDSTOP_PULLUP_X_MAX true
 #define ENDSTOP_PULLUP_Y_MAX true
-#define ENDSTOP_PULLUP_Z_MAX false
+#define ENDSTOP_PULLUP_Z_MAX true
 
 //set to true to invert the logic of the endstops
 #define ENDSTOP_X_MIN_INVERTING true
 #define ENDSTOP_Y_MIN_INVERTING true
 #define ENDSTOP_Z_MIN_INVERTING true
-#define ENDSTOP_X_MAX_INVERTING false
-#define ENDSTOP_Y_MAX_INVERTING false
+#define ENDSTOP_X_MAX_INVERTING true
+#define ENDSTOP_Y_MAX_INVERTING true
 #define ENDSTOP_Z_MAX_INVERTING true
 
 // Set the values true where you have a hardware endstop. The Pin number is taken from pins.h.
 
-#define MIN_HARDWARE_ENDSTOP_X true
-#define MIN_HARDWARE_ENDSTOP_Y true
+#define MIN_HARDWARE_ENDSTOP_X false
+#define MIN_HARDWARE_ENDSTOP_Y false
 #define MIN_HARDWARE_ENDSTOP_Z false
-#define MAX_HARDWARE_ENDSTOP_X false
-#define MAX_HARDWARE_ENDSTOP_Y false
+#define MAX_HARDWARE_ENDSTOP_X true
+#define MAX_HARDWARE_ENDSTOP_Y true
 #define MAX_HARDWARE_ENDSTOP_Z true
 
 //If your axes are only moving in one direction, make sure the endstops are connected properly.
@@ -646,8 +647,8 @@ on this endstop.
 
 //// ENDSTOP SETTINGS:
 // Sets direction of endstops when homing; 1=MAX, -1=MIN
-#define X_HOME_DIR -1
-#define Y_HOME_DIR -1
+#define X_HOME_DIR 1
+#define Y_HOME_DIR 1
 #define Z_HOME_DIR 1
 
 // Delta robot radius endstop
@@ -661,12 +662,12 @@ on this endstop.
 //If true, axis won't move to coordinates greater than the defined lengths below.
 #define max_software_endstop_x true
 #define max_software_endstop_y true
-#define max_software_endstop_z false
+#define max_software_endstop_z true
 
 // If during homing the endstop is reached, ho many mm should the printer move back for the second try
-#define ENDSTOP_X_BACK_MOVE 5
-#define ENDSTOP_Y_BACK_MOVE 5
-#define ENDSTOP_Z_BACK_MOVE 2
+#define ENDSTOP_X_BACK_MOVE 3
+#define ENDSTOP_Y_BACK_MOVE 3
+#define ENDSTOP_Z_BACK_MOVE 3
 
 // For higher precision you can reduce the speed for the second test on the endstop
 // during homing operation. The homing speed is divided by the value. 1 = same speed, 2 = half speed
@@ -678,7 +679,7 @@ on this endstop.
 // small amount back. This is also the case with H-belt systems.
 #define ENDSTOP_X_BACK_ON_HOME 1
 #define ENDSTOP_Y_BACK_ON_HOME 1
-#define ENDSTOP_Z_BACK_ON_HOME 5
+#define ENDSTOP_Z_BACK_ON_HOME 1
 
 // You can disable endstop checking for print moves. This is needed, if you get sometimes
 // false signals from your endstops. If your endstops don't give false signals, you
@@ -689,9 +690,9 @@ on this endstop.
 // For delta robot Z_MAX_LENGTH is the maximum travel of the towers and should be set to the distance between the hotend
 // and the platform when the printer is at its home position.
 // If EEPROM is enabled these values will be overidden with the values in the EEPROM
-#define X_MAX_LENGTH 165
-#define Y_MAX_LENGTH 175
-#define Z_MAX_LENGTH 116.820
+#define X_MAX_LENGTH 160
+#define Y_MAX_LENGTH 160
+#define Z_MAX_LENGTH 160
 
 // Coordinates for the minimum axis. Can also be negative if you want to have the bed start at 0 and the printer can go to the left side
 // of the bed. Maximum coordinate is given by adding the above X_MAX_LENGTH values.
@@ -722,7 +723,7 @@ on this endstop.
 #if DRIVE_SYSTEM==3
 /** \brief Delta rod length
 */
-#define DELTA_DIAGONAL_ROD 345 // mm
+#define DELTA_DIAGONAL_ROD 150 // mm
 
 
 /*  =========== Parameter essential for delta calibration ===================
@@ -759,7 +760,7 @@ on this endstop.
 #define DELTA_DIAGONAL_CORRECTION_C 0
 
 /** Max. radius the printer should be able to reach. */
-#define DELTA_MAX_RADIUS 200
+#define DELTA_MAX_RADIUS 180
 
 
 /** \brief Horizontal offset of the universal joints on the end effector (moving platform).
@@ -768,11 +769,11 @@ on this endstop.
 
 /** \brief Horizontal offset of the universal joints on the vertical carriages.
 */
-#define CARRIAGE_HORIZONTAL_OFFSET 18
+#define CARRIAGE_HORIZONTAL_OFFSET 14
 
 /** \brief Printer radius in mm, measured from the center of the print area to the vertical smooth rod.
 */
-#define PRINTER_RADIUS 175
+#define PRINTER_RADIUS 111.9
 
 /** Remove comment for more precise delta moves. Needs a bit more computation time. */
 //#define EXACT_DELTA_MOVES
@@ -815,26 +816,38 @@ Mega. Used only for nonlinear systems like delta or tuga. */
     This helps cooling the Stepper motors between two print jobs.
     Overridden if EEPROM activated.
 */
-#define STEPPER_INACTIVE_TIME 360
+#define STEPPER_INACTIVE_TIME 60
 /** After x seconds of inactivity, the system will go down as far it can.
     It will at least disable all stepper motors and heaters. If the board has
     a power pin, it will be disabled, too.
     Set value to 0 for disabled.
     Overridden if EEPROM activated.
 */
-#define MAX_INACTIVE_TIME 0L
+#define MAX_INACTIVE_TIME 900L // 15 minutes
 /** Maximum feedrate, the system allows. Higher feedrates are reduced to these values.
     The axis order in all axis related arrays is X, Y, Z
-     Overridden if EEPROM activated.
+    Overridden if EEPROM activated.
+	3DR notes:
+	Feel free to home a bit faster if you like. The Extruder max feedrate is
+	interesting, you want this as fast as possible but not too fast so the extruder
+	can't drive it. After much experience using this extruder and setting current
+	limits of the NEMA17 motor (48mm long 2.5A version) for me the maximum speed to
+	set in firmware is 32mm. I usually limit it to 29 as that's fast enough for
+	most Bowden systems under 1000mm long.
+
+	You can increase the X,Y,Z feedrates, 500 to 800 should be workable, I run at
+	500 on my 3DR's now. if you want to experiment higher feel free! you will be
+	shocked how fast travel and print moves are.
     */
-#define MAX_FEEDRATE_X 200
-#define MAX_FEEDRATE_Y 200
-#define MAX_FEEDRATE_Z 5
+
+#define MAX_FEEDRATE_X 380
+#define MAX_FEEDRATE_Y 380
+#define MAX_FEEDRATE_Z 380
 
 /** Home position speed in mm/s. Overridden if EEPROM activated. */
-#define HOMING_FEEDRATE_X 80
-#define HOMING_FEEDRATE_Y 80
-#define HOMING_FEEDRATE_Z 3
+#define HOMING_FEEDRATE_X 40
+#define HOMING_FEEDRATE_Y 40
+#define HOMING_FEEDRATE_Z 40
 
 /** Set order of axis homing. Use HOME_ORDER_XYZ and replace XYZ with your order. */
 #define HOMING_ORDER HOME_ORDER_ZXY
@@ -885,12 +898,12 @@ If the interval at full speed is below this value, smoothing is disabled for tha
 */
 #define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_X 1000
 #define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Y 1000
-#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Z 100
+#define MAX_ACCELERATION_UNITS_PER_SQ_SECOND_Z 1000
 
 /** \brief X, Y, Z max acceleration in mm/s^2 for travel moves.  Overridden if EEPROM activated.*/
 #define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_X 2000
 #define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Y 2000
-#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Z 100
+#define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Z 2000
 
 /** \brief Maximum allowable jerk.
 
@@ -986,8 +999,8 @@ to activate the quadratic term. Only adds lots of computations and storage usage
  Overridden if EEPROM activated.
 */
 //#define BAUDRATE 76800
-#define BAUDRATE 115200
-//#define BAUDRATE 250000
+// #define BAUDRATE 115200
+#define BAUDRATE 250000
 
 /**
 Some boards like Gen7 have a power on pin, to enable the atx power supply. If this is defined,
@@ -1041,7 +1054,7 @@ matches, the stored values are used to overwrite the settings.
 IMPORTANT: With mode <>0 some changes in Configuration.h are not set any more, as they are
            taken from the EEPROM.
 */
-#define EEPROM_MODE 1
+#define EEPROM_MODE 0
 
 
 /**************** duplicate motor driver ***************
@@ -1088,7 +1101,8 @@ WARNING: Servos can draw a considerable amount of current. Make sure your system
 #define SERVO2_PIN 5
 #define SERVO3_PIN 4
 
-/* A watchdog resets the printer, if a signal is not send within predifined time limits. That way we can be sure that the board
+/* A watchdog resets the printer, if a signal is not send within predifined time
+ * limits. That way we can be sure that the board
 is always running and is not hung up for some unknown reason. */
 #define FEATURE_WATCHDOG true
 
@@ -1186,7 +1200,7 @@ The following settings override uiconfig.h!
 14 = OpenHardware.co.za LCD2004 V2014
 15 = Sanguinololu + Panelolu2
 */
-#define FEATURE_CONTROLLER 0
+#define FEATURE_CONTROLLER 11
 
 /**
 Select the language to use.
@@ -1200,11 +1214,11 @@ Select the language to use.
 7 = French
 8 = Czech
 */
-#define UI_LANGUAGE 1
+#define UI_LANGUAGE 0
 
 // This is line 2 of the status display at startup. Change to your like.
-#define UI_PRINTER_NAME "Ordbot"
-#define UI_PRINTER_COMPANY "RepRapDiscount"
+#define UI_PRINTER_NAME "3DR Delta"
+#define UI_PRINTER_COMPANY "SlySoft"
 
 
 /** Animate switches between menus etc. */
@@ -1214,7 +1228,7 @@ Select the language to use.
 #define UI_PAGES_DURATION 4000
 
 /** Delay of start screen in milliseconds */
-#define UI_START_SCREEN_DELAY 1000
+#define UI_START_SCREEN_DELAY 500
 /** Uncomment if you don't want automatic page switching. You can still switch the
 info pages with next/previous button/click-encoder */
 #define UI_DISABLE_AUTO_PAGESWITCH true

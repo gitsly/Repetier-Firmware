@@ -33,15 +33,15 @@
 # $Id$
 
 TARGET = $(notdir $(CURDIR))
-INSTALL_DIR = D:/arduino/arduino-0022
+INSTALL_DIR = /usr/share/arduino
 UPLOAD_RATE = 38400
 AVRDUDE_PROGRAMMER = stk500v1
-PORT = COM10
-#MCU = atmega2560
+PORT = COM9
+MCU = atmega2560
 #For "old" Arduino Mega
 #MCU = atmega1280
 #For Sanguinololu
-MCU = atmega644p 
+# MCU = atmega644p 
 F_CPU = 16000000
 
 
@@ -49,9 +49,12 @@ F_CPU = 16000000
 # Below here nothing should be changed...
 
 ARDUINO = $(INSTALL_DIR)/hardware/arduino/cores/arduino
-#AVR_TOOLS_PATH = /usr/bin
-AVR_TOOLS_PATH = d:/WinAVR/bin
-SRC =  $(ARDUINO)/pins_arduino.c $(ARDUINO)/wiring.c \
+AVR_TOOLS_PATH = /usr/bin
+
+
+# $(INSTALL_DIR)/pins_arduino.c 
+
+SRC =  $(ARDUINO)/wiring.c \
 $(ARDUINO)/wiring_analog.c $(ARDUINO)/wiring_digital.c \
 $(ARDUINO)/wiring_pulse.c \
 $(ARDUINO)/wiring_shift.c $(ARDUINO)/WInterrupts.c
@@ -133,17 +136,17 @@ all: applet_files build sizeafter
 
 build: elf hex lss
 
-applet_files: $(TARGET).pde
+applet_files: $(TARGET).ino
 	# Here is the "preprocessing".
-	# It creates a .cpp file based with the same name as the .pde file.
+	# It creates a .cpp file based with the same name as the .ino file.
 	# On top of the new .cpp file comes the WProgram.h header.
 	# At the end there is a generic main() function attached.
 	# Then the .cpp file will be compiled. Errors during compile will
 	# refer to this new, automatically generated, file. 
-	# Not the original .pde file you actually edit...
+	# Not the original .ino file you actually edit...
 	test -d applet || mkdir applet
 	echo '#include "WProgram.h"' > applet/$(TARGET).cpp
-	cat $(TARGET).pde >> applet/$(TARGET).cpp
+	cat $(TARGET).ino >> applet/$(TARGET).cpp
 	cat $(ARDUINO)/main.cpp >> applet/$(TARGET).cpp
 
 elf: applet/$(TARGET).elf
@@ -201,7 +204,7 @@ extcoff: $(TARGET).elf
 	$(NM) -n $< > $@
 
 	# Link: create ELF output file from library.
-applet/$(TARGET).elf: $(TARGET).pde applet/core.a 
+applet/$(TARGET).elf: $(TARGET).ino applet/core.a 
 	$(CXX) $(ALL_CXXFLAGS) -o $@ applet/$(TARGET).cpp -L. applet/core.a $(LDFLAGS)
 	$(ELFSIZE)
 
