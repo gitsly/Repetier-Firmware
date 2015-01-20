@@ -705,7 +705,7 @@ on this endstop.
 // ##########################################################################################
 
 // Microstep setting (Only functional when stepper driver microstep pins are connected to MCU. Currently only works for RAMBO boards
-#define MICROSTEP_MODES {8,8,8,8,8} // [1,2,4,8,16]
+#define MICROSTEP_MODES {16,16,16,16,16} // [1,2,4,8,16]
 
 // Motor Current setting (Only functional when motor driver current ref pins are connected to a digital trimpot on supported boards)
 #if MOTHERBOARD==301
@@ -716,8 +716,17 @@ on this endstop.
 
 /** \brief Number of segments to generate for delta conversions per second of move
 */
-#define DELTA_SEGMENTS_PER_SECOND_PRINT 180 // Move accurate setting for print moves
-#define DELTA_SEGMENTS_PER_SECOND_MOVE 70 // Less accurate setting for other moves
+
+// Own notes:
+// Rostock Problems with X/Y Movement Stuttering:
+// My guess would be line buffer underflow.
+// http://forums.reprap.org/read.php?178,235397
+// Don't know if these params have anything todo with stuttering at slow feedrate
+// The stuttering may have been due to wrongly setup stepper drivers. The problem seems mitigated when i 
+// Configured the stepper drivers (correct uSteps, and also increased current from about 1A to 1.6A).
+
+#define DELTA_SEGMENTS_PER_SECOND_PRINT 200 //180 // Move accurate setting for print moves, tried 70 here to, slow feed is still jerky as hell.
+#define DELTA_SEGMENTS_PER_SECOND_MOVE 100 // Less accurate setting for other moves
 
 // Delta settings
 #if DRIVE_SYSTEM==3
@@ -845,9 +854,9 @@ Mega. Used only for nonlinear systems like delta or tuga. */
 #define MAX_FEEDRATE_Z 380
 
 /** Home position speed in mm/s. Overridden if EEPROM activated. */
-#define HOMING_FEEDRATE_X 40
-#define HOMING_FEEDRATE_Y 40
-#define HOMING_FEEDRATE_Z 40
+#define HOMING_FEEDRATE_X 90
+#define HOMING_FEEDRATE_Y 90
+#define HOMING_FEEDRATE_Z 90
 
 /** Set order of axis homing. Use HOME_ORDER_XYZ and replace XYZ with your order. */
 #define HOMING_ORDER HOME_ORDER_ZXY
@@ -878,7 +887,7 @@ additional stepper interrupts with all it's overhead. As a result you can go as 
 /** If you need frequencies off more then 30000 you definitely need to enable this. If you have only 1/8 stepping
 enabling this may cause to stall your moves when 20000Hz is reached.
 */
-#define ALLOW_QUADSTEPPING true
+#define ALLOW_QUADSTEPPING false // Don't know if quadstepping have anything todo with stuttering at slow feedrate
 /** If you reach STEP_DOUBLER_FREQUENCY the firmware will do 2 or 4 steps with nearly no delay. That can be too fast
 for some printers causing an early stall.
 
@@ -1054,7 +1063,7 @@ matches, the stored values are used to overwrite the settings.
 IMPORTANT: With mode <>0 some changes in Configuration.h are not set any more, as they are
            taken from the EEPROM.
 */
-#define EEPROM_MODE 0
+#define EEPROM_MODE 133
 
 
 /**************** duplicate motor driver ***************
