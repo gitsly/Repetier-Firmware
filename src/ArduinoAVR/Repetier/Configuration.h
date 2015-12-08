@@ -137,7 +137,7 @@ If a motor turns in the wrong direction change INVERT_X_DIR or INVERT_Y_DIR.
 #define STEPS_PER_ROTATION 200
 
 /** \brief Micro stepping rate of X, Y and Y tower stepper drivers */
-#define MICRO_STEPS 32
+#define MICRO_STEPS 16
 
 // Calculations
 #define AXIS_STEPS_PER_MM ((float)(MICRO_STEPS * STEPS_PER_ROTATION) / PULLEY_CIRCUMFERENCE)
@@ -278,7 +278,12 @@ The codes are only executed for multiple extruder when changing the extruder. */
 #define EXT0_SELECT_COMMANDS "M117 Extruder 1"
 #define EXT0_DESELECT_COMMANDS ""
 /** The extruder cooler is a fan to cool the extruder when it is heating. If you turn the etxruder on, the fan goes on. */
-#define EXT0_EXTRUDER_COOLER_PIN 7 // -1 to disable coupling extruder to fan.
+
+//RUMBA:
+// Pin 6 is Heater02 (can also be used for FAN PWM).
+// Pin 7 is Fan0. (Use for layerfan)
+// Pin 8 is Fan1.
+#define EXT0_EXTRUDER_COOLER_PIN 8 // -1 to disable coupling extruder to fan.
 /** PWM speed for the cooler fan. 0=off 255=full speed */
 #define EXT0_EXTRUDER_COOLER_SPEED 255
 
@@ -1191,7 +1196,7 @@ is always running and is not hung up for some unknown reason. */
 the FAN pin is not the same as for your second extruder. RAMPS e.g. has FAN_PIN in 9 which
 is also used for the heater if you have 2 extruders connected.
 If going to turn on fan when extruder get's hot, set this to false otherwise that won't work */
-#define FEATURE_FAN_CONTROL false
+#define FEATURE_FAN_CONTROL true
 
 /** For displays and keys there are too many permutations to handle them all in once.
 For the most common available combinations you can set the controller type here, so
